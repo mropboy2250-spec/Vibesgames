@@ -3,169 +3,1197 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GameVibe Admin</title>
+<title>GameVibe - App Store</title>
+<link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎮</text></svg>">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
-body{
-  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
-  color:white;
-  min-height:100vh;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Roboto, sans-serif;
 }
-.hidden{display:none}
-.center{display:flex;justify-content:center;align-items:center;min-height:100vh}
-.box{
-  background:rgba(255,255,255,0.08);
-  padding:30px;border-radius:16px;
-  width:100%;max-width:380px;
-}
-h2{text-align:center;color:#00ffd5;margin-bottom:15px}
-input,button{
-  width:100%;padding:12px;border:none;
-  border-radius:10px;margin-top:10px
-}
-input{background:#111;color:white}
-button{background:#00ffd5;font-weight:bold}
-.switch{text-align:center;margin-top:10px}
-.switch span{color:#00ffd5;cursor:pointer}
 
-/* DASHBOARD */
-.dashboard{padding:20px}
-.topbar{display:flex;justify-content:space-between;align-items:center}
-.nav button{background:#111;color:#00ffd5;margin-left:5px}
-.card{
-  background:rgba(255,255,255,0.08);
-  padding:15px;border-radius:14px;margin-top:15px
+:root {
+  --primary: #00e5ff;
+  --primary-dark: #00b8d4;
+  --secondary: #ff4081;
+  --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-hover: rgba(255, 255, 255, 0.15);
+  --text-light: #ffffff;
+  --text-dim: #b0bec5;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --radius: 16px;
+  --radius-sm: 12px;
 }
-table{width:100%;margin-top:10px}
-th,td{padding:8px;border-bottom:1px solid #555;text-align:left}
+
+body {
+  background: var(--bg-gradient);
+  color: var(--text-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* AUTH SCREENS */
+.auth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg-gradient);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.box {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+input, button, select {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: var(--radius-sm);
+  margin-top: 12px;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+input {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.2);
+}
+
+button {
+  background: var(--primary);
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+button.secondary:hover {
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.switch {
+  text-align: center;
+  margin-top: 15px;
+  color: var(--text-dim);
+}
+
+.switch span {
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+/* APP LAYOUT */
+.app {
+  padding-bottom: 80px;
+  animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.header {
+  padding: 20px 15px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(15, 32, 39, 0.9);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  color: var(--primary);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 20px;
+}
+
+.user-role {
+  background: var(--primary);
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/* SEARCH */
+.search-container {
+  padding: 15px;
+  position: sticky;
+  top: 60px;
+  background: rgba(15, 32, 39, 0.9);
+  z-index: 99;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding-left: 45px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23b0bec5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  background-size: 20px;
+}
+
+.filter-btn {
+  width: auto;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+/* APP CATEGORIES */
+.categories {
+  padding: 10px 15px;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.category-btn {
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border-radius: 20px;
+  font-size: 14px;
+  width: auto;
+  white-space: nowrap;
+}
+
+.category-btn.active {
+  background: var(--primary);
+  color: #000;
+  font-weight: bold;
+}
+
+/* APP GRID */
+.section-title {
+  padding: 15px 15px 5px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.see-all {
+  color: var(--primary);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 15px;
+}
+
+.app-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 15px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.app-card:hover {
+  background: var(--card-hover);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+
+.app-icon {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+}
+
+.app-name {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.app-category {
+  color: var(--text-dim);
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.app-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: #ffc107;
+}
+
+.download-btn {
+  background: rgba(0, 229, 255, 0.2);
+  color: var(--primary);
+  padding: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+
+.download-btn:hover {
+  background: rgba(0, 229, 255, 0.3);
+}
+
+/* BANNER */
+.banner {
+  background: linear-gradient(135deg, #ff4081, #ff9100);
+  margin: 15px;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.banner-icon {
+  font-size: 40px;
+}
+
+.banner-text h3 {
+  margin-bottom: 5px;
+}
+
+.banner-text p {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* BOTTOM NAV */
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background: rgba(15, 32, 39, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 12px 0;
+  z-index: 1000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.nav-btn.active {
+  color: var(--primary);
+}
+
+.nav-btn:hover {
+  color: var(--primary);
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.nav-icon {
+  font-size: 20px;
+}
+
+/* ADMIN PANEL */
+.admin-container {
+  padding: 15px;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-card {
+  background: var(--card-bg);
+  padding: 15px;
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.admin-table {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+td {
+  padding: 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+.role-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.role-badge.admin {
+  background: rgba(255, 64, 129, 0.2);
+  color: #ff4081;
+}
+
+.role-badge.user {
+  background: rgba(0, 229, 255, 0.2);
+  color: var(--primary);
+}
+
+.delete-btn {
+  background: rgba(255, 64, 129, 0.2);
+  color: #ff4081;
+  padding: 6px 12px;
+  font-size: 13px;
+  width: auto;
+}
+
+/* DETAIL MODAL */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.modal-content {
+  background: var(--bg-gradient);
+  width: 100%;
+  max-width: 500px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+}
+
+.modal-title {
+  flex: 1;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-description {
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: var(--text-dim);
+}
+
+.modal-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.modal-stat {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-actions button {
+  flex: 1;
+}
+
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .apps-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  
+  .header h1 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .apps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .box {
+    padding: 20px;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div class="center" id="loginBox">
+<!-- LOGIN SCREEN -->
+<div class="auth" id="loginBox">
   <div class="box">
-    <h2>Login</h2>
-    <input id="loginUser" placeholder="Username">
+    <h2>🎮 GameVibe</h2>
+    <input id="loginUser" placeholder="Username or Email">
     <input id="loginPass" type="password" placeholder="Password">
-    <button onclick="login()">Login</button>
-    <div class="switch">New? <span onclick="showSignup()">Create account</span></div>
+    <button onclick="login()">🔑 Login</button>
+    <div class="switch">New to GameVibe? <span onclick="showSignup()">Create account</span></div>
+    <button class="secondary" onclick="quickDemo()">🚀 Quick Demo (No Login)</button>
   </div>
 </div>
 
-<!-- SIGNUP -->
-<div class="center hidden" id="signupBox">
+<!-- SIGNUP SCREEN -->
+<div class="auth hidden" id="signupBox">
   <div class="box">
     <h2>Create Account</h2>
-    <input id="signupUser" placeholder="Username">
-    <input id="signupPass" type="password" placeholder="Password">
-    <button onclick="signup()">Sign Up</button>
-    <div class="switch"><span onclick="showLogin()">Back to login</span></div>
+    <input id="signupUser" placeholder="Choose Username">
+    <input id="signupEmail" placeholder="Email Address">
+    <input id="signupPass" type="password" placeholder="Create Password">
+    <select id="signupRole">
+      <option value="user">Regular User</option>
+      <option value="developer">Developer</option>
+    </select>
+    <button onclick="signup()">✅ Sign Up</button>
+    <div class="switch">Already have an account? <span onclick="showLogin()">Login here</span></div>
   </div>
 </div>
 
-<!-- DASHBOARD -->
-<div class="dashboard hidden" id="dashboard">
-  <div class="topbar">
-    <h2 id="dashTitle"></h2>
-    <div class="nav">
-      <button onclick="showUsers()">All Accounts</button>
-      <button onclick="showAdmin()">Admin Panel</button>
-      <button onclick="logout()">Logout</button>
+<!-- MAIN APP -->
+<div class="app hidden" id="app">
+  <!-- HEADER -->
+  <div class="header">
+    <h1><span>🎮</span> GameVibe Store</h1>
+    <div class="user-info">
+      <span id="usernameDisplay">User</span>
+      <div class="user-role" id="userRole">user</div>
     </div>
   </div>
 
-  <!-- ALL USERS -->
-  <div class="card hidden" id="usersTab">
-    <h3>All Accounts</h3>
-    <table>
-      <thead><tr><th>Username</th><th>Role</th></tr></thead>
-      <tbody id="userList"></tbody>
-    </table>
+  <!-- SEARCH -->
+  <div class="search-container">
+    <div class="search-bar">
+      <input id="searchInput" placeholder="Search apps & games...">
+      <button class="filter-btn" onclick="toggleFilter()">🔍</button>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="categories">
+    <button class="category-btn active" onclick="filterCategory('all')">All</button>
+    <button class="category-btn" onclick="filterCategory('games')">🎮 Games</button>
+    <button class="category-btn" onclick="filterCategory('entertainment')">🎬 Entertainment</button>
+    <button class="category-btn" onclick="filterCategory('tools')">🛠️ Tools</button>
+    <button class="category-btn" onclick="filterCategory('social')">💬 Social</button>
+    <button class="category-btn" onclick="filterCategory('education')">📚 Education</button>
+  </div>
+
+  <!-- FEATURED BANNER -->
+  <div class="banner hidden" id="adminBanner">
+    <div class="banner-icon">👑</div>
+    <div class="banner-text">
+      <h3>Admin Dashboard</h3>
+      <p>Manage users, apps, and platform settings</p>
+    </div>
+  </div>
+
+  <!-- APPS SECTIONS -->
+  <div id="homeContent">
+    <div class="section-title">
+      <h3>🔥 Popular Games</h3>
+      <span class="see-all">See all</span>
+    </div>
+    <div class="apps-grid" id="popularApps"></div>
+
+    <div class="section-title">
+      <h3>⭐ Recommended For You</h3>
+      <span class="see-all">See all</span>
+    </div>
+    <div class="apps-grid" id="recommendedApps"></div>
+
+    <div class="section-title">
+      <h3>🆕 New Releases</h3>
+      <span class="see-all">See all</span>
+    </div>
+    <div class="apps-grid" id="newApps"></div>
   </div>
 
   <!-- ADMIN PANEL -->
-  <div class="card hidden" id="adminTab">
-    <h3>Admin Powers</h3>
-    <p>✔ View all users</p>
-    <p>✔ Control system (demo)</p>
-    <p>✔ Future: ban / approve / upload</p>
+  <div class="admin-container hidden" id="adminPanel">
+    <div class="admin-header">
+      <h2>👑 Admin Dashboard</h2>
+      <button onclick="refreshUsers()">🔄 Refresh</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-value" id="totalUsers">0</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="totalApps">0</div>
+        <div class="stat-label">Total Apps</div>
+      </div>
+    </div>
+
+    <h3>User Management</h3>
+    <div class="admin-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable"></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
+<!-- APP DETAIL MODAL -->
+<div class="modal hidden" id="appModal">
+  <div class="close-modal" onclick="closeModal()">✕</div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <img class="modal-icon" id="modalIcon" src="" alt="App Icon">
+      <div class="modal-title">
+        <h3 id="modalName">App Name</h3>
+        <p id="modalCategory">Category</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <p class="modal-description" id="modalDescription">App description will appear here.</p>
+      <div class="modal-stats">
+        <div class="modal-stat">
+          <div class="stat-value" id="modalRating">4.5</div>
+          <div class="stat-label">Rating</div>
+        </div>
+        <div class="modal-stat">
+          <div class="stat-value" id="modalDownloads">10K+</div>
+          <div class="stat-label">Downloads</div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button onclick="downloadApp()">⬇️ Download</button>
+        <button class="secondary" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+<div class="nav hidden" id="nav">
+  <button class="nav-btn active" onclick="showHome()">
+    <div class="nav-icon">🏠</div>
+    <span>Home</span>
+  </button>
+  <button class="nav-btn" onclick="showGames()">
+    <div class="nav-icon">🎮</div>
+    <span>Games</span>
+  </button>
+  <button class="nav-btn" onclick="showApps()">
+    <div class="nav-icon">📱</div>
+    <span>Apps</span>
+  </button>
+  <button class="nav-btn" onclick="showAdminPage()">
+    <div class="nav-icon">👑</div>
+    <span>Admin</span>
+  </button>
+</div>
+
 <script>
+// Constants and Initial Data
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "admin123";
+let currentRole = "user";
+let currentUser = "";
+let appsData = [];
+let currentCategory = "all";
 
-function showSignup(){
+// Initialize sample apps data
+function initAppsData() {
+  appsData = [
+    {
+      id: 1,
+      name: "GameVibe",
+      category: "games",
+      icon: "https://images.unsplash.com/photo-1605902711622-cfb43c4437d1?w=400",
+      rating: 4.8,
+      downloads: "50K+",
+      description: "Experience the ultimate gaming platform with thousands of games and social features."
+    },
+    {
+      id: 2,
+      name: "PPSSPP",
+      category: "games",
+      icon: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w-400",
+      rating: 4.7,
+      downloads: "100K+",
+      description: "The best PSP emulator for Android. Play your favorite PSP games on your device."
+    },
+    {
+      id: 3,
+      name: "RetroArch",
+      category: "games",
+      icon: "https://images.unsplash.com/photo-1534423861386-85a16f5d13fd?w=400",
+      rating: 4.5,
+      downloads: "80K+",
+      description: "All-in-one emulation frontend for retro games from multiple consoles."
+    },
+    {
+      id: 4,
+      name: "Dolphin",
+      category: "games",
+      icon: "https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=400",
+      rating: 4.6,
+      downloads: "60K+",
+      description: "GameCube and Wii emulator for Android devices."
+    },
+    {
+      id: 5,
+      name: "Spotify",
+      category: "entertainment",
+      icon: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400",
+      rating: 4.9,
+      downloads: "500M+",
+      description: "Music streaming service with millions of songs and podcasts."
+    },
+    {
+      id: 6,
+      name: "Netflix",
+      category: "entertainment",
+      icon: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=400",
+      rating: 4.7,
+      downloads: "1B+",
+      description: "Watch TV shows, movies, documentaries and more."
+    },
+    {
+      id: 7,
+      name: "Tasker",
+      category: "tools",
+      icon: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400",
+      rating: 4.6,
+      downloads: "1M+",
+      description: "Automate everything from settings to complex tasks on your device."
+    },
+    {
+      id: 8,
+      name: "Discord",
+      category: "social",
+      icon: "https://images.unsplash.com/photo-1633113090205-cc1ac79b1299?w=400",
+      rating: 4.8,
+      downloads: "100M+",
+      description: "Chat, hang out, and stay close with your friends and communities."
+    }
+  ];
+}
+
+// Auth Functions
+function showSignup() {
   loginBox.classList.add("hidden");
   signupBox.classList.remove("hidden");
 }
-function showLogin(){
+
+function showLogin() {
   signupBox.classList.add("hidden");
   loginBox.classList.remove("hidden");
 }
 
-function signup(){
-  let users = JSON.parse(localStorage.getItem("users")) || [];
-  let user = signupUser.value;
-  let pass = signupPass.value;
-
-  if(!user || !pass){alert("Fill all fields");return}
-
-  users.push({user, pass, role:"user"});
-  localStorage.setItem("users", JSON.stringify(users));
-  alert("Account Created");
-  showLogin();
+function quickDemo() {
+  // Create a temporary demo user
+  currentUser = "DemoUser";
+  currentRole = "user";
+  openApp("user");
 }
 
-function login(){
-  let u = loginUser.value;
-  let p = loginPass.value;
+function signup() {
+  const username = document.getElementById("signupUser").value;
+  const email = document.getElementById("signupEmail").value;
+  const password = document.getElementById("signupPass").value;
+  const role = document.getElementById("signupRole").value;
 
-  if(u===ADMIN_USER && p===ADMIN_PASS){
-    openDashboard("admin");
+  if (!username || !email || !password) {
+    alert("Please fill all fields");
     return;
   }
 
   let users = JSON.parse(localStorage.getItem("users")) || [];
-  let found = users.find(x=>x.user===u && x.pass===p);
+  
+  if (users.find(u => u.user === username)) {
+    alert("Username already exists");
+    return;
+  }
 
-  if(found){ openDashboard("user"); }
-  else{ alert("Wrong login"); }
-}
+  if (users.find(u => u.email === email)) {
+    alert("Email already registered");
+    return;
+  }
 
-function openDashboard(role){
-  loginBox.classList.add("hidden");
-  dashboard.classList.remove("hidden");
-  dashTitle.innerText = role==="admin" ? "👑 Admin Dashboard" : "User Dashboard";
-}
-
-function showUsers(){
-  usersTab.classList.remove("hidden");
-  adminTab.classList.add("hidden");
-
-  let users = JSON.parse(localStorage.getItem("users")) || [];
-  userList.innerHTML = "";
-  users.forEach(u=>{
-    userList.innerHTML += `<tr><td>${u.user}</td><td>${u.role}</td></tr>`;
+  users.push({
+    user: username,
+    email: email,
+    pass: password,
+    role: role,
+    joined: new Date().toISOString()
   });
+
+  localStorage.setItem("users", JSON.stringify(users));
+  alert("Account created successfully!");
+  
+  // Auto login after signup
+  document.getElementById("loginUser").value = username;
+  document.getElementById("loginPass").value = password;
+  showLogin();
 }
 
-function showAdmin(){
-  adminTab.classList.remove("hidden");
-  usersTab.classList.add("hidden");
+function login() {
+  const username = document.getElementById("loginUser").value;
+  const password = document.getElementById("loginPass").value;
+
+  // Admin login
+  if (username === ADMIN_USER && password === ADMIN_PASS) {
+    currentUser = "Admin";
+    openApp("admin");
+    return;
+  }
+
+  // Regular user login
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let user = users.find(u => (u.user === username || u.email === username) && u.pass === password);
+
+  if (user) {
+    currentUser = user.user;
+    currentRole = user.role;
+    openApp(user.role);
+  } else {
+    alert("Invalid username/email or password");
+  }
 }
 
-function logout(){
-  dashboard.classList.add("hidden");
-  usersTab.classList.add("hidden");
-  adminTab.classList.add("hidden");
-  loginBox.classList.remove("hidden");
+function openApp(role) {
+  currentRole = role;
+  
+  // Hide auth screens
+  loginBox.classList.add("hidden");
+  signupBox.classList.add("hidden");
+  
+  // Show app
+  app.classList.remove("hidden");
+  nav.classList.remove("hidden");
+  
+  // Update UI based on role
+  document.getElementById("usernameDisplay").textContent = currentUser;
+  document.getElementById("userRole").textContent = role;
+  
+  // Show admin banner if admin
+  if (role === "admin") {
+    document.getElementById("adminBanner").classList.remove("hidden");
+  } else {
+    document.getElementById("adminBanner").classList.add("hidden");
+  }
+  
+  // Initialize apps data and render
+  initAppsData();
+  renderApps();
+  
+  // Load admin data if admin
+  if (role === "admin") {
+    loadAdminData();
+  }
 }
+
+// App Display Functions
+function renderApps() {
+  const popularAppsEl = document.getElementById("popularApps");
+  const recommendedAppsEl = document.getElementById("recommendedApps");
+  const newAppsEl = document.getElementById("newApps");
+  
+  // Filter apps by current category
+  let filteredApps = appsData;
+  if (currentCategory !== "all") {
+    filteredApps = appsData.filter(app => app.category === currentCategory);
+  }
+  
+  // Render popular apps (first 4)
+  popularAppsEl.innerHTML = filteredApps.slice(0, 4).map(app => `
+    <div class="app-card" onclick="openAppDetail(${app.id})">
+      <img class="app-icon" src="${app.icon}" alt="${app.name}">
+      <div class="app-name">${app.name}</div>
+      <div class="app-category">${app.category}</div>
+      <div class="app-rating">⭐ ${app.rating}</div>
+      <button class="download-btn">Download</button>
+    </div>
+  `).join('');
+  
+  // Render recommended apps (next 4)
+  recommendedAppsEl.innerHTML = filteredApps.slice(4, 8).map(app => `
+    <div class="app-card" onclick="openAppDetail(${app.id})">
+      <img class="app-icon" src="${app.icon}" alt="${app.name}">
+      <div class="app-name">${app.name}</div>
+      <div class="app-category">${app.category}</div>
+      <div class="app-rating">⭐ ${app.rating}</div>
+      <button class="download-btn">Download</button>
+    </div>
+  `).join('');
+  
+  // Render new apps (shuffle for variety)
+  const shuffledApps = [...filteredApps].sort(() => 0.5 - Math.random()).slice(0, 4);
+  newAppsEl.innerHTML = shuffledApps.map(app => `
+    <div class="app-card" onclick="openAppDetail(${app.id})">
+      <img class="app-icon" src="${app.icon}" alt="${app.name}">
+      <div class="app-name">${app.name}</div>
+      <div class="app-category">${app.category}</div>
+      <div class="app-rating">⭐ ${app.rating}</div>
+      <button class="download-btn">Download</button>
+    </div>
+  `).join('');
+  
+  // Update total apps count
+  document.getElementById("totalApps").textContent = appsData.length;
+}
+
+function filterCategory(category) {
+  currentCategory = category;
+  
+  // Update active category button
+  document.querySelectorAll('.category-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  
+  renderApps();
+}
+
+function openAppDetail(appId) {
+  const app = appsData.find(a => a.id === appId);
+  if (!app) return;
+  
+  document.getElementById("modalIcon").src = app.icon;
+  document.getElementById("modalName").textContent = app.name;
+  document.getElementById("modalCategory").textContent = app.category;
+  document.getElementById("modalDescription").textContent = app.description;
+  document.getElementById("modalRating").textContent = app.rating;
+  document.getElementById("modalDownloads").textContent = app.downloads;
+  
+  document.getElementById("appModal").classList.remove("hidden");
+}
+
+function closeModal() {
+  document.getElementById("appModal").classList.add("hidden");
+}
+
+function downloadApp() {
+  const appName = document.getElementById("modalName").textContent;
+  alert(`Starting download of ${appName}...`);
+  closeModal();
+}
+
+// Navigation Functions
+function showHome() {
+  document.getElementById("homeContent").classList.remove("hidden");
+  document.getElementById("adminPanel").classList.add("hidden");
+  updateNavButtons('home');
+}
+
+function showGames() {
+  filterCategory('games');
+  updateNavButtons('games');
+}
+
+function showApps() {
+  filterCategory('tools');
+  updateNavButtons('apps');
+}
+
+function showAdminPage() {
+  if (currentRole !== "admin") {
+    alert("Admin access only");
+    return;
+  }
+  
+  document.getElementById("homeContent").classList.add("hidden");
+  document.getElementById("adminPanel").classList.remove("hidden");
+  document.getElementById("adminBanner").classList.remove("hidden");
+  updateNavButtons('admin');
+  
+  loadAdminData();
+}
+
+function updateNavButtons(active) {
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  if (active === 'home') {
+    document.querySelector('.nav-btn:nth-child(1)').classList.add('active');
+  } else if (active === 'games') {
+    document.querySelector('.nav-btn:nth-child(2)').classList.add('active');
+  } else if (active === 'apps') {
+    document.querySelector('.nav-btn:nth-child(3)').classList.add('active');
+  } else if (active === 'admin') {
+    document.querySelector('.nav-btn:nth-child(4)').classList.add('active');
+  }
+}
+
+// Admin Functions
+function loadAdminData() {
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  const tableBody = document.getElementById("usersTable");
+  
+  // Update stats
+  document.getElementById("totalUsers").textContent = users.length + 1; // +1 for admin
+  
+  // Render user table
+  let tableHTML = '';
+  
+  // Add admin user
+  tableHTML += `
+    <tr>
+      <td>${ADMIN_USER}</td>
+      <td>admin@gamevibe.com</td>
+      <td><span class="role-badge admin">Admin</span></td>
+      <td><button class="delete-btn" disabled>System</button></td>
+    </tr>
+  `;
+  
+  // Add regular users
+  users.forEach((user, index) => {
+    tableHTML += `
+      <tr>
+        <td>${user.user}</td>
+        <td>${user.email || 'N/A'}</td>
+        <td><span class="role-badge ${user.role}">${user.role}</span></td>
+        <td><button class="delete-btn" onclick="deleteUser(${index})">Delete</button></td>
+      </tr>
+    `;
+  });
+  
+  tableBody.innerHTML = tableHTML;
+}
+
+function deleteUser(index) {
+  if (!confirm("Are you sure you want to delete this user?")) return;
+  
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  users.splice(index, 1);
+  localStorage.setItem("users", JSON.stringify(users));
+  
+  loadAdminData();
+  alert("User deleted successfully");
+}
+
+function refreshUsers() {
+  loadAdminData();
+  alert("User list refreshed");
+}
+
+function toggleFilter() {
+  alert("Filter feature coming soon!");
+}
+
+function logout() {
+  if (confirm("Are you sure you want to logout?")) {
+    location.reload();
+  }
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+  // Check if user is already logged in (demo)
+  const lastUser = localStorage.getItem("lastUser");
+  if (lastUser) {
+    document.getElementById("loginUser").value = lastUser;
+  }
+  
+  // Search functionality
+  const searchInput = document.getElementById("searchInput");
+  searchInput.addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    if (searchTerm.length > 2) {
+      // Filter and display search results
+      const filtered = appsData.filter(app => 
+        app.name.toLowerCase().includes(searchTerm) || 
+        app.category.toLowerCase().includes(searchTerm) ||
+        app.description.toLowerCase().includes(searchTerm)
+      );
+      
+      // For now, just show an alert with count
+      if (filtered.length > 0) {
+        console.log(`Found ${filtered.length} apps matching "${searchTerm}"`);
+      }
+    }
+  });
+});
 </script>
 
 </body>
-    </html>
+  </html>
