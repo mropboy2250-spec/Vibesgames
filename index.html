@@ -13,90 +13,32 @@ body{
   min-height:100vh;
 }
 .hidden{display:none}
-.center{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-}
+.center{display:flex;justify-content:center;align-items:center;min-height:100vh}
 .box{
   background:rgba(255,255,255,0.08);
-  padding:30px;
-  border-radius:16px;
-  width:100%;
-  max-width:380px;
-  backdrop-filter:blur(10px);
-  animation:fade 0.8s ease;
+  padding:30px;border-radius:16px;
+  width:100%;max-width:380px;
 }
-@keyframes fade{
-  from{opacity:0;transform:translateY(30px)}
-  to{opacity:1;transform:translateY(0)}
-}
-h2{text-align:center;color:#00ffd5;margin-bottom:20px}
+h2{text-align:center;color:#00ffd5;margin-bottom:15px}
 input,button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  margin-top:12px;
+  width:100%;padding:12px;border:none;
+  border-radius:10px;margin-top:10px
 }
 input{background:#111;color:white}
-button{
-  background:#00ffd5;
-  font-weight:bold;
-  cursor:pointer;
-}
-.switch-text{
-  text-align:center;
-  margin-top:15px;
-  font-size:0.9rem;
-  opacity:0.8;
-}
-.switch-text span{color:#00ffd5;cursor:pointer}
+button{background:#00ffd5;font-weight:bold}
+.switch{text-align:center;margin-top:10px}
+.switch span{color:#00ffd5;cursor:pointer}
 
 /* DASHBOARD */
 .dashboard{padding:20px}
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
+.topbar{display:flex;justify-content:space-between;align-items:center}
+.nav button{background:#111;color:#00ffd5;margin-left:5px}
 .card{
   background:rgba(255,255,255,0.08);
-  padding:20px;
-  border-radius:16px;
+  padding:15px;border-radius:14px;margin-top:15px
 }
-.card h3{color:#00ffd5;margin-bottom:10px}
-.logout{background:#ff4d4d;color:white}
-
-/* NAV */
-.nav{
-  display:flex;
-  gap:10px;
-}
-.nav button{
-  background:#111;
-  color:#00ffd5;
-}
-
-/* PROFILE */
-.profile-box{
-  max-width:500px;
-  margin:auto;
-  background:rgba(255,255,255,0.08);
-  padding:25px;
-  border-radius:16px;
-}
-.profile-box p{
-  margin:10px 0;
-  font-size:1rem;
-}
+table{width:100%;margin-top:10px}
+th,td{padding:8px;border-bottom:1px solid #555;text-align:left}
 </style>
 </head>
 
@@ -105,134 +47,125 @@ button{
 <!-- LOGIN -->
 <div class="center" id="loginBox">
   <div class="box">
-    <h2>🔐 Login</h2>
+    <h2>Login</h2>
     <input id="loginUser" placeholder="Username">
     <input id="loginPass" type="password" placeholder="Password">
     <button onclick="login()">Login</button>
-    <div class="switch-text">
-      New here? <span onclick="showSignup()">Create account</span>
-    </div>
+    <div class="switch">New? <span onclick="showSignup()">Create account</span></div>
   </div>
 </div>
 
 <!-- SIGNUP -->
 <div class="center hidden" id="signupBox">
   <div class="box">
-    <h2>📝 Sign Up</h2>
+    <h2>Create Account</h2>
     <input id="signupUser" placeholder="Username">
-    <input id="signupEmail" placeholder="Email">
     <input id="signupPass" type="password" placeholder="Password">
     <button onclick="signup()">Sign Up</button>
-    <div class="switch-text">
-      Already have account? <span onclick="showLogin()">Login</span>
-    </div>
+    <div class="switch"><span onclick="showLogin()">Back to login</span></div>
   </div>
 </div>
 
 <!-- DASHBOARD -->
 <div class="dashboard hidden" id="dashboard">
   <div class="topbar">
-    <h2>👑 Admin Dashboard</h2>
+    <h2 id="dashTitle"></h2>
     <div class="nav">
-      <button onclick="openProfile()">Profile</button>
-      <button class="logout" onclick="logout()">Logout</button>
+      <button onclick="showUsers()">All Accounts</button>
+      <button onclick="showAdmin()">Admin Panel</button>
+      <button onclick="logout()">Logout</button>
     </div>
   </div>
 
-  <div class="cards">
-    <div class="card">
-      <h3>📦 Apps Uploaded</h3>
-      <p>12</p>
-    </div>
-    <div class="card">
-      <h3>👥 Users</h3>
-      <p>58</p>
-    </div>
-    <div class="card">
-      <h3>⬇ Downloads</h3>
-      <p>1,240</p>
-    </div>
+  <!-- ALL USERS -->
+  <div class="card hidden" id="usersTab">
+    <h3>All Accounts</h3>
+    <table>
+      <thead><tr><th>Username</th><th>Role</th></tr></thead>
+      <tbody id="userList"></tbody>
+    </table>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="card hidden" id="adminTab">
+    <h3>Admin Powers</h3>
+    <p>✔ View all users</p>
+    <p>✔ Control system (demo)</p>
+    <p>✔ Future: ban / approve / upload</p>
   </div>
 </div>
 
-<!-- PROFILE PAGE -->
-<div class="dashboard hidden" id="profilePage">
-  <div class="topbar">
-    <h2>👤 User Profile</h2>
-    <button onclick="backToDashboard()">Back</button>
-  </div>
-
-  <div class="profile-box">
-    <p><b>Username:</b> <span id="pUser"></span></p>
-    <p><b>Email:</b> <span id="pEmail"></span></p>
-    <p><b>Joined:</b> <span id="pDate"></span></p>
-  </div>
-</div>
 <script>
-function showSignup(){
-  document.getElementById("loginBox").classList.add("hidden");
-  document.getElementById("signupBox").classList.remove("hidden");
-}
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "admin123";
 
+function showSignup(){
+  loginBox.classList.add("hidden");
+  signupBox.classList.remove("hidden");
+}
 function showLogin(){
-  document.getElementById("signupBox").classList.add("hidden");
-  document.getElementById("loginBox").classList.remove("hidden");
+  signupBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
 }
 
 function signup(){
-  const user = document.getElementById("signupUser").value;
-  const email = document.getElementById("signupEmail").value;
-  const pass = document.getElementById("signupPass").value;
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let user = signupUser.value;
+  let pass = signupPass.value;
 
-  if(user === "" || email === "" || pass === ""){
-    alert("Please fill all fields");
-    return;
-  }
+  if(!user || !pass){alert("Fill all fields");return}
 
-  localStorage.setItem("user", user);
-  localStorage.setItem("email", email);
-  localStorage.setItem("pass", pass);
-  localStorage.setItem("date", new Date().toDateString());
-
-  alert("Account Created Successfully ✅");
+  users.push({user, pass, role:"user"});
+  localStorage.setItem("users", JSON.stringify(users));
+  alert("Account Created");
   showLogin();
 }
 
 function login(){
-  const u = document.getElementById("loginUser").value;
-  const p = document.getElementById("loginPass").value;
+  let u = loginUser.value;
+  let p = loginPass.value;
 
-  if(
-    u === localStorage.getItem("user") &&
-    p === localStorage.getItem("pass")
-  ){
-    document.getElementById("loginBox").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-  }else{
-    alert("Wrong Username or Password ❌");
+  if(u===ADMIN_USER && p===ADMIN_PASS){
+    openDashboard("admin");
+    return;
   }
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let found = users.find(x=>x.user===u && x.pass===p);
+
+  if(found){ openDashboard("user"); }
+  else{ alert("Wrong login"); }
+}
+
+function openDashboard(role){
+  loginBox.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+  dashTitle.innerText = role==="admin" ? "👑 Admin Dashboard" : "User Dashboard";
+}
+
+function showUsers(){
+  usersTab.classList.remove("hidden");
+  adminTab.classList.add("hidden");
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  userList.innerHTML = "";
+  users.forEach(u=>{
+    userList.innerHTML += `<tr><td>${u.user}</td><td>${u.role}</td></tr>`;
+  });
+}
+
+function showAdmin(){
+  adminTab.classList.remove("hidden");
+  usersTab.classList.add("hidden");
 }
 
 function logout(){
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("profilePage").classList.add("hidden");
-  document.getElementById("loginBox").classList.remove("hidden");
+  dashboard.classList.add("hidden");
+  usersTab.classList.add("hidden");
+  adminTab.classList.add("hidden");
+  loginBox.classList.remove("hidden");
 }
-
-function openProfile(){
-  document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("profilePage").classList.remove("hidden");
-
-  document.getElementById("pUser").innerText = localStorage.getItem("user");
-  document.getElementById("pEmail").innerText = localStorage.getItem("email");
-  document.getElementById("pDate").innerText = localStorage.getItem("date");
-}
-
-function backToDashboard(){
-  document.getElementById("profilePage").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-}
-    </script>
+</script>
 
 </body>
-  </html>
+    </html>
