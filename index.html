@@ -168,57 +168,71 @@ button{
     <p><b>Joined:</b> <span id="pDate"></span></p>
   </div>
 </div>
-
 <script>
 function showSignup(){
-  loginBox.classList.add("hidden");
-  signupBox.classList.remove("hidden");
+  document.getElementById("loginBox").classList.add("hidden");
+  document.getElementById("signupBox").classList.remove("hidden");
 }
+
 function showLogin(){
-  signupBox.classList.add("hidden");
-  loginBox.classList.remove("hidden");
+  document.getElementById("signupBox").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
 }
 
 function signup(){
-  localStorage.setItem("user", signupUser.value);
-  localStorage.setItem("email", signupEmail.value);
-  localStorage.setItem("pass", signupPass.value);
+  const user = document.getElementById("signupUser").value;
+  const email = document.getElementById("signupEmail").value;
+  const pass = document.getElementById("signupPass").value;
+
+  if(user === "" || email === "" || pass === ""){
+    alert("Please fill all fields");
+    return;
+  }
+
+  localStorage.setItem("user", user);
+  localStorage.setItem("email", email);
+  localStorage.setItem("pass", pass);
   localStorage.setItem("date", new Date().toDateString());
-  alert("Account Created");
+
+  alert("Account Created Successfully ✅");
   showLogin();
 }
 
 function login(){
+  const u = document.getElementById("loginUser").value;
+  const p = document.getElementById("loginPass").value;
+
   if(
-    loginUser.value === localStorage.getItem("user") &&
-    loginPass.value === localStorage.getItem("pass")
+    u === localStorage.getItem("user") &&
+    p === localStorage.getItem("pass")
   ){
-    loginBox.classList.add("hidden");
-    dashboard.classList.remove("hidden");
+    document.getElementById("loginBox").classList.add("hidden");
+    document.getElementById("dashboard").classList.remove("hidden");
   }else{
-    alert("Wrong login");
+    alert("Wrong Username or Password ❌");
   }
 }
 
 function logout(){
-  dashboard.classList.add("hidden");
-  profilePage.classList.add("hidden");
-  loginBox.classList.remove("hidden");
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("profilePage").classList.add("hidden");
+  document.getElementById("loginBox").classList.remove("hidden");
 }
 
 function openProfile(){
-  dashboard.classList.add("hidden");
-  profilePage.classList.remove("hidden");
-  pUser.innerText = localStorage.getItem("user");
-  pEmail.innerText = localStorage.getItem("email");
-  pDate.innerText = localStorage.getItem("date");
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("profilePage").classList.remove("hidden");
+
+  document.getElementById("pUser").innerText = localStorage.getItem("user");
+  document.getElementById("pEmail").innerText = localStorage.getItem("email");
+  document.getElementById("pDate").innerText = localStorage.getItem("date");
 }
 
 function backToDashboard(){
-  profilePage.classList.add("hidden");
-  dashboard.classList.remove("hidden");
+  document.getElementById("profilePage").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
 }
-</script>
+    </script>
 
 </body>
   </html>
