@@ -1,1 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameVibe Admin</title>
 
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{
+  background:linear-gradient(120deg,#0f2027,#203a43,#2c5364);
+  color:white;
+  min-height:100vh;
+}
+.hidden{display:none}
+.center{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.box{
+  background:rgba(255,255,255,0.08);
+  padding:30px;
+  border-radius:16px;
+  width:100%;
+  max-width:380px;
+  backdrop-filter:blur(10px);
+  animation:fade 0.8s ease;
+}
+@keyframes fade{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:translateY(0)}
+}
+h2{text-align:center;color:#00ffd5;margin-bottom:20px}
+input,button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  margin-top:12px;
+}
+input{background:#111;color:white}
+button{
+  background:#00ffd5;
+  font-weight:bold;
+  cursor:pointer;
+}
+.switch-text{
+  text-align:center;
+  margin-top:15px;
+  font-size:0.9rem;
+  opacity:0.8;
+}
+.switch-text span{color:#00ffd5;cursor:pointer}
+
+/* DASHBOARD */
+.dashboard{padding:20px}
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+}
+.card{
+  background:rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:16px;
+}
+.card h3{color:#00ffd5;margin-bottom:10px}
+.logout{background:#ff4d4d;color:white}
+
+/* NAV */
+.nav{
+  display:flex;
+  gap:10px;
+}
+.nav button{
+  background:#111;
+  color:#00ffd5;
+}
+
+/* PROFILE */
+.profile-box{
+  max-width:500px;
+  margin:auto;
+  background:rgba(255,255,255,0.08);
+  padding:25px;
+  border-radius:16px;
+}
+.profile-box p{
+  margin:10px 0;
+  font-size:1rem;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div class="center" id="loginBox">
+  <div class="box">
+    <h2>🔐 Login</h2>
+    <input id="loginUser" placeholder="Username">
+    <input id="loginPass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div class="switch-text">
+      New here? <span onclick="showSignup()">Create account</span>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP -->
+<div class="center hidden" id="signupBox">
+  <div class="box">
+    <h2>📝 Sign Up</h2>
+    <input id="signupUser" placeholder="Username">
+    <input id="signupEmail" placeholder="Email">
+    <input id="signupPass" type="password" placeholder="Password">
+    <button onclick="signup()">Sign Up</button>
+    <div class="switch-text">
+      Already have account? <span onclick="showLogin()">Login</span>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard hidden" id="dashboard">
+  <div class="topbar">
+    <h2>👑 Admin Dashboard</h2>
+    <div class="nav">
+      <button onclick="openProfile()">Profile</button>
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <h3>📦 Apps Uploaded</h3>
+      <p>12</p>
+    </div>
+    <div class="card">
+      <h3>👥 Users</h3>
+      <p>58</p>
+    </div>
+    <div class="card">
+      <h3>⬇ Downloads</h3>
+      <p>1,240</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PAGE -->
+<div class="dashboard hidden" id="profilePage">
+  <div class="topbar">
+    <h2>👤 User Profile</h2>
+    <button onclick="backToDashboard()">Back</button>
+  </div>
+
+  <div class="profile-box">
+    <p><b>Username:</b> <span id="pUser"></span></p>
+    <p><b>Email:</b> <span id="pEmail"></span></p>
+    <p><b>Joined:</b> <span id="pDate"></span></p>
+  </div>
+</div>
+
+<script>
+function showSignup(){
+  loginBox.classList.add("hidden");
+  signupBox.classList.remove("hidden");
+}
+function showLogin(){
+  signupBox.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+}
+
+function signup(){
+  localStorage.setItem("user", signupUser.value);
+  localStorage.setItem("email", signupEmail.value);
+  localStorage.setItem("pass", signupPass.value);
+  localStorage.setItem("date", new Date().toDateString());
+  alert("Account Created");
+  showLogin();
+}
+
+function login(){
+  if(
+    loginUser.value === localStorage.getItem("user") &&
+    loginPass.value === localStorage.getItem("pass")
+  ){
+    loginBox.classList.add("hidden");
+    dashboard.classList.remove("hidden");
+  }else{
+    alert("Wrong login");
+  }
+}
+
+function logout(){
+  dashboard.classList.add("hidden");
+  profilePage.classList.add("hidden");
+  loginBox.classList.remove("hidden");
+}
+
+function openProfile(){
+  dashboard.classList.add("hidden");
+  profilePage.classList.remove("hidden");
+  pUser.innerText = localStorage.getItem("user");
+  pEmail.innerText = localStorage.getItem("email");
+  pDate.innerText = localStorage.getItem("date");
+}
+
+function backToDashboard(){
+  profilePage.classList.add("hidden");
+  dashboard.classList.remove("hidden");
+}
+</script>
+
+</body>
+  </html>
