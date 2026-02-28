@@ -1,1 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibesGames 2.0 – Premium Game Store</title>
+    <meta name="description" content="Download the best games. AI‑powered recommendations, secure & fast.">
+    <!-- PWA manifest (simulated) -->
+    <link rel="manifest" href="#">
+    <meta name="theme-color" content="#4361ee">
+    <!-- CSP meta (simulated) -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';">
+    <!-- Font Awesome & custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-mode">
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">🎮 VibesGames 2.0</div>
+            <div class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
 
+        <!-- Main content injected by script -->
+        <main id="mainContent"></main>
+
+        <!-- Bottom navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-btn active" data-view="home"><i class="fas fa-home"></i><span>Home</span></button>
+            <button class="nav-btn" data-view="store"><i class="fas fa-store"></i><span>Store</span></button>
+            <button class="nav-btn" data-view="dashboard"><i class="fas fa-user"></i><span>Dashboard</span></button>
+            <button class="nav-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i><span>Login</span></button>
+        </nav>
+
+        <!-- Modals -->
+        <div id="loginModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="text" id="loginUsername" placeholder="Username" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Don't have account? <a href="#" id="showRegister">Register</a></p>
+            </div>
+        </div>
+
+        <div id="registerModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Register</h2>
+                <form id="registerForm">
+                    <input type="text" id="regUsername" placeholder="Username" required>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <input type="password" id="regPassword" placeholder="Password" required>
+                    <select id="regRole">
+                        <option value="user">User</option>
+                        <option value="developer">Developer</option>
+                    </select>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="gameModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="gameDetailContent"></div>
+            </div>
+        </div>
+
+        <!-- Floating AI Chat Bot -->
+        <div id="chatBot" class="chat-bot hidden">
+            <div class="chat-header">AI Assistant</div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <input type="text" id="chatInput" placeholder="Ask me...">
+        </div>
+        <button id="chatToggle" class="chat-toggle">💬</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+  </html>
